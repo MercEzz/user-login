@@ -56,11 +56,11 @@ const Login = (props) => {
       p="2rem"
     >
       <FormControl>
-        <Box
+        <Flex
           m="1rem 0"
           display={"flex"}
           alignItems={{ base: "center", lg: "stretch" }}
-          flexDir={{ base: "row", lg: "column" }}
+          flexDir={{ base: "column", lg: "row" }}
         >
           <FormLabel
             htmlFor="email"
@@ -75,6 +75,7 @@ const Login = (props) => {
           <Input
             type="email"
             id="email"
+            size="sm"
             flex={"3"}
             fontStyle="inherit"
             p="0.35rem"
@@ -91,8 +92,13 @@ const Login = (props) => {
             onChange={emailChangeHandler}
             onBlur={validateEmailHandler}
           />
-        </Box>
-        <Box>
+        </Flex>
+        <Flex
+          m="1rem 0"
+          display={"flex"}
+          alignItems={{ base: "center", lg: "stretch" }}
+          flexDir={{ base: "column", lg: "row" }}
+        >
           <FormLabel
             htmlFor="password"
             display={"block"}
@@ -106,6 +112,7 @@ const Login = (props) => {
           <Input
             type="password"
             id="password"
+            size="sm"
             flex={"3"}
             fontStyle="inherit"
             p="0.35rem"
@@ -122,7 +129,7 @@ const Login = (props) => {
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
           />
-        </Box>
+        </Flex>
         <Box textAlign={"center"}>
           <Button
             fontStyle={"inherit"}

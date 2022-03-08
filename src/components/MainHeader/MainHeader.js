@@ -15,7 +15,7 @@ const MainHeader = (props) => {
       background="purple"
       padding={"0 2rem"}
     >
-      <Heading as="h1" color={"white"}>
+      <Heading as="h1" size={"lg"} color={"white"}>
         A Typical Page
       </Heading>
       <Navigation
