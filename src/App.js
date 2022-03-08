@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Home from "./components/Home/Home";
+import Login from "./components/Login/Login";
 import MainHeader from "./components/MainHeader/MainHeader";
 
 const App = () => {
@@ -15,7 +17,10 @@ const App = () => {
   return (
     <>
       <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
-      <main>{/* {!isLoggedIn &&} */}</main>
+      <main>
+        {!isLoggedIn && <Login onLogin={loginHandler} />}
+        {isLoggedIn && <Home onLogout={logoutHandler} />}
+      </main>
     </>
   );
 };
