@@ -1,6 +1,7 @@
 import { Flex, Heading } from "@chakra-ui/react";
+import Navigation from "./Navigation";
 
-const MainHeader = () => {
+const MainHeader = (props) => {
   return (
     <Flex
       pos={"fixed"}
@@ -17,6 +18,10 @@ const MainHeader = () => {
       <Heading as="h1" color={"white"}>
         A Typical Page
       </Heading>
+      <Navigation
+        isLoggedIn={props.isAuthenticated}
+        onLogout={props.onLogout}
+      />
     </Flex>
   );
 };
