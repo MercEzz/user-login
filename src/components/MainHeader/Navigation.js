@@ -39,6 +39,7 @@ const Navigation = (props) => {
         {props.isLoggedIn && (
           <ListItem m="0" ml="2rem">
             <Button
+              onClick={props.onLogout}
               fontStyle={"inherit"}
               background="purple.500"
               border={"purple.500"}
