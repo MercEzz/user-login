@@ -1,36 +1,19 @@
 import { Box } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import MainHeader from "./components/MainHeader/MainHeader";
+import AuthContext from "./store/auth-context";
 
 const App = () => {
-  const [isLoggedIn, setIsloggedIn] = useState(false);
-
-  useEffect(() => {
-    const storedUserLoggedInInfo = localStorage.getItem("isLoggedIn");
-
-    if (storedUserLoggedInInfo === "1") {
-      setIsloggedIn(true);
-    }
-  }, []);
-
-  const loginHandler = (email, password) => {
-    localStorage.setItem("isLoggedIn", "1");
-    setIsloggedIn(true);
-  };
-
-  const logoutHandler = () => {
-    localStorage.removeItem("isLoggedIn");
-    setIsloggedIn(false);
-  };
+  const ctx = useContext(AuthContext);
 
   return (
     <>
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+      <MainHeader />
       <Box mt="6rem">
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
-        {isLoggedIn && <Home onLogout={logoutHandler} />}
+        {!ctx.isLoggedIn && <Login />}
+        {ctx.isLoggedIn && <Home />}
       </Box>
     </>
   );

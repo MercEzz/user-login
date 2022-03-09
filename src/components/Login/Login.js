@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, {
+  useEffect,
+  useState,
+  useReducer,
+  useContext,
+  useRef,
+} from "react";
 
-import {
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  Input,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, FormControl } from "@chakra-ui/react";
+import AuthContext from "../../store/auth-context";
+import InputB from "./Input";
 
 const emailReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
@@ -45,6 +46,11 @@ const Login = (props) => {
     value: "",
     isValid: null,
   });
+
+  const authCtx = useContext(AuthContext);
+
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
 
   useEffect(() => {
     console.log("EFFECT RUNNING");
@@ -91,7 +97,13 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    if (formIsValid) {
+      authCtx.onLogin(emailState.value, passwordState.value);
+    } else if (!emailIsValid) {
+      emailInputRef.current.focus();
+    } else {
+      passwordInputRef.current.focus();
+    }
   };
 
   return (
@@ -105,81 +117,27 @@ const Login = (props) => {
       p="2rem"
     >
       <FormControl>
-        <Flex
-          m="1rem 0"
-          display={"flex"}
-          alignItems="stretch"
-          flexDir={{ base: "column", lg: "row" }}
-        >
-          <FormLabel
-            htmlFor="email"
-            display={"block"}
-            fontWeight="bold"
-            flex={"1"}
-            color="gray.700"
-            mb={"0.5rem"}
-          >
-            E-Mail
-          </FormLabel>
-          <Input
-            type="email"
+        <Box textAlign={"center"}>
+          <InputB
+            ref={emailInputRef}
             id="email"
-            size="sm"
-            flex={"3"}
-            fontStyle="inherit"
-            p="0.35rem"
-            borderRadius={"6px"}
-            border="1px solid #ccc"
-            _focus={{
-              outline: "none",
-              borderColor: "purple.900",
-              background: "#f6dbfc",
-            }}
-            borderColor={emailState === false ? "red" : "none"}
-            background={emailState === false ? "#fbdada" : "none"}
+            label="E-Mail"
+            type="email"
+            isValid={emailIsValid}
             value={emailState.value}
             onChange={emailChangeHandler}
             onBlur={validateEmailHandler}
           />
-        </Flex>
-        <Flex
-          m="1rem 0"
-          display={"flex"}
-          alignItems="stretch"
-          flexDir={{ base: "column", lg: "row" }}
-        >
-          <FormLabel
-            htmlFor="password"
-            display={"block"}
-            fontWeight="bold"
-            flex={"1"}
-            color="gray.700"
-            mb={"0.5rem"}
-          >
-            Password
-          </FormLabel>
-          <Input
-            type="password"
+          <InputB
+            ref={passwordInputRef}
             id="password"
-            size="sm"
-            flex={"3"}
-            fontStyle="inherit"
-            p="0.35rem"
-            borderRadius={"6px"}
-            border="1px solid #ccc"
-            _focus={{
-              outline: "none",
-              borderColor: "purple.900",
-              background: "#f6dbfc",
-            }}
-            borderColor={passwordState === false ? "red" : "none"}
-            background={passwordState === false ? "#fbdada" : "none"}
+            label="Password"
+            type="password"
+            isValid={passwordIsValid}
             value={passwordState.value}
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
           />
-        </Flex>
-        <Box textAlign={"center"}>
           <Button
             fontStyle={"inherit"}
             border="1px solid purple.900"
@@ -193,7 +151,7 @@ const Login = (props) => {
             _active={{ background: "purple.500", borderColor: "purple.500" }}
             _focus={{ outline: "none" }}
             type="submit"
-            disabled={!formIsValid}
+            // disabled={!formIsValid}
             onClick={submitHandler}
           >
             Login

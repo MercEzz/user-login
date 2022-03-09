@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { Box, Button, Link, ListItem, UnorderedList } from "@chakra-ui/react";
+import AuthContext from "../../store/auth-context";
 
-const Navigation = (props) => {
+const Navigation = () => {
+  const ctx = useContext(AuthContext);
   return (
     <Box>
       <UnorderedList
@@ -10,7 +13,7 @@ const Navigation = (props) => {
         display={"flex"}
         alignItems="center"
       >
-        {props.isLoggedIn && (
+        {ctx.isLoggedIn && (
           <ListItem m="0" ml="2rem">
             <Link
               href="/"
@@ -23,7 +26,7 @@ const Navigation = (props) => {
             </Link>
           </ListItem>
         )}
-        {props.isLoggedIn && (
+        {ctx.isLoggedIn && (
           <ListItem m="0" ml="2rem">
             <Link
               href="/"
@@ -36,10 +39,10 @@ const Navigation = (props) => {
             </Link>
           </ListItem>
         )}
-        {props.isLoggedIn && (
+        {ctx.isLoggedIn && (
           <ListItem m="0" ml="2rem">
             <Button
-              onClick={props.onLogout}
+              onClick={ctx.onLogout}
               fontStyle={"inherit"}
               background="purple.500"
               border={"purple.500"}

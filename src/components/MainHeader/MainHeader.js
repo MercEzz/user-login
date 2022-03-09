@@ -18,10 +18,7 @@ const MainHeader = (props) => {
       <Heading as="h1" size={"lg"} color={"white"}>
         A Typical Page
       </Heading>
-      <Navigation
-        isLoggedIn={props.isAuthenticated}
-        onLogout={props.onLogout}
-      />
+      <Navigation onLogout={props.onLogout} />
     </Flex>
   );
 };
